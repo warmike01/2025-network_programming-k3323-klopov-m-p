@@ -1,6 +1,6 @@
 University: [ITMO University](https://itmo.ru/ru/)
 
-Faculty: [FICT](https://fict.itmo.ru)
+Faculty: [FICT](https://itmo.ru/ru/viewfaculty/19/fakultet_prikladnoy_informatiki.htm)
 
 Course: [Network programming](https://github.com/itmo-ict-faculty/network-programming)
 
@@ -53,7 +53,7 @@ Date of finished: 28.03.2025
 После этого виртуалку можно настраивать по SSH. После многих проб и ошибок была выведена следующая последовательность команд для подключения к серверу (секреты замаскированы):
 
 ```
- /ip ipsec profile add dh-group=modp2048 enc-algorithm=aes-256 name=ipsec-profile
+/ip ipsec profile add dh-group=modp2048 enc-algorithm=aes-256 name=ipsec-profile
 /ip ipsec proposal add name=connect auth-algorithms=sha1 enc-algorithms=aes-256-cbc
 /ip ipsec peer add address=79.141.71.4/32 passive=no exchange-mode=main name=server profile=ipsec-profile
 /ip ipsec identity add auth-method=pre-shared-key peer=server secret=<psk>
