@@ -35,13 +35,21 @@ VBoxManage internalcommands sethduuid "/home/warmike01/Documents/chr-6.49.18_cop
 VBoxManage internalcommands sethduuid "/home/warmike01/Documents/chr-6.49.18_copy2.vdi"
 ```
 
-После создания виртуалок ОЧЕНЬ ВАЖНО заменить NAT на Bridged Adapter в сетевых настройках:
+![Рандомизация](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab2/Screenshot%20from%202025-05-11%2003-00-19.png)
+
+После создания виртуалок ОЧЕНЬ ВАЖНО заменить NAT на Bridged Adapter в сетевых настройках (иначе микротики отказываются подключаться к VPN):
+
+![Настройка сетевого адаптера](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab2/Screenshot%20from%202025-05-11%2003-07-56.png)
 
 Это значит, что микротики подключаются к нашей домашней сети. 
 
 Что интересно, через панель управления роутера видно только один из них:
 
+![Что интересно, через панель управления роутера видно только один из них.](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab2/Screenshot%20from%202025-05-11%2003-21-28.png)
+
 Но доступны оба.
+
+![Но доступны оба.](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab2/Screenshot%20from%202025-05-11%2003-22-31.png)
 
 Подключимся к VPN с одного из них:
 
@@ -49,5 +57,7 @@ VBoxManage internalcommands sethduuid "/home/warmike01/Documents/chr-6.49.18_cop
 interface pptp-client add name=pptp-vpn connect-to=<ip> user=router1 password=<password> disabled=no
 ```
 А другой, для разнообразия, подключим через WinBox:
+
+![Подключение через VPN](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab2/Screenshot%20from%202025-05-11%2003-28-39.png)
 
 ![Лог сервера](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab2/log.PNG)
