@@ -27,3 +27,25 @@ Date of finished: 11.05.2025
 Но вот наступили лучшие времена, а точнее майские праздники, и было решено возобновить работу на даче, с другим провайдером. И в итоге это дало результат.
 
 Был взят скрипт https://github.com/saaiful/PPTP-VPN. После того, как он отработал, в файл /etc/ppp/chap-secrets был добавлен второй аккаунт для второго роутера. 
+
+Теперь нужно создать две виртуалки. VirtualBox не позволяет одновременно смонтировать клоны одного диска, поэтому нужно рандомизировать образам UUID:
+
+```
+VBoxManage internalcommands sethduuid "/home/warmike01/Documents/chr-6.49.18_copy1.vdi"
+VBoxManage internalcommands sethduuid "/home/warmike01/Documents/chr-6.49.18_copy2.vdi"
+```
+
+После создания виртуалок ОЧЕНЬ ВАЖНО заменить NAT на Bridged Adapter в сетевых настройках:
+
+Это значит, что микротики подключаются к нашей домашней сети. 
+
+Что интересно, через панель управления роутера видно только один из них:
+
+Но доступны оба.
+
+Подключимся к VPN с одного из них:
+
+```
+interface pptp-client add name=pptp-vpn connect-to=<ip> user=router1 password=<password> disabled=no
+```
+А другой, для разнообразия, подключим через WinBox:
