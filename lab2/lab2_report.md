@@ -49,3 +49,5 @@ VBoxManage internalcommands sethduuid "/home/warmike01/Documents/chr-6.49.18_cop
 interface pptp-client add name=pptp-vpn connect-to=<ip> user=router1 password=<password> disabled=no
 ```
 А другой, для разнообразия, подключим через WinBox:
+
+![Лог сервера](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab2/log.PNG)
