@@ -1,0 +1,37 @@
+---
+- name: Router configuration
+  hosts: routers
+  remote_user: admin
+  gather_facts: no
+  tasks:
+    - name: Set up OSPF
+      community.routeros.command:
+        commands:
+          - /routing ospf set default router-id={{ router_id }}
+          - /routing ospf instance disable default
+          - /routing ospf instance enable default
+          - /routing ospf add area=backbone
+    - name: Set up NTP
+      community.routeros.command:
+        commands:
+          - /system ntp client set enabled=yes server-dns-names=ru.pool.ntp.org
+    - name: Set up new user
+      community.routeros.command:
+        commands:
+          - /user add name=remote group=full password=tByL0yZBpBO5bwou
+    - name: Collect system configuration
+      community.routeros.command:
+        commands:
+          - /export hide-sensitive
+      register: router_config
+    - name: Collect OSPF topology
+      community.routeros.command:
+        commands:
+          - /routing ospf neighbor print
+      register: ospf_topology
+    - name: Print system configuration
+      ansible.builtin.debug:
+        msg: "{{ router_config.stdout_lines }}"
+    - name: Print OSPF topology
+      ansible.builtin.debug:
+        msg: "{{ ospf_topology.stdout_lines }}"
