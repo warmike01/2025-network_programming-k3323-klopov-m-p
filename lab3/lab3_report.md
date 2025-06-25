@@ -26,7 +26,7 @@ VBoxManage internalcommands sethduuid "/home/warmike01/Documents/chr-6.49.18_cop
 ```
 Также нужно настроить виртуалкам сетевой мост вместо NAT в качестве адаптера, чтобы у них был полноценный IP-адрес в локальной сети.
 
-Теперь нужно по [инструкции](https://github.com/netbox-community/netbox-docker) установить Netbox и добавить в него виртуалки, а также командой *ansible-galaxy collection install netbox.netbox* установить модуль Netbox для Ansible.
+Теперь нужно по [инструкции](https://github.com/netbox-community/netbox-docker) установить Netbox, добавить в него виртуалки и выдать себе API token, а также командой *ansible-galaxy collection install netbox.netbox* установить модуль Netbox для Ansible.
 
 Всё настроили, теперь можно командой *ansible-playbook collection_playbook.yaml* собирать данные. Они пришли в файл devices.json.
 
@@ -56,3 +56,20 @@ VBoxManage internalcommands sethduuid "/home/warmike01/Documents/chr-6.49.18_cop
 
 ![Исполнение](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab3/Screenshot%20from%202025-06-25%2002-49-22.png)
 
+Последняя задача - собрать с виртуалок серийные номера и записать их в Netbox. Исполняем *ansible-playbook updateinfo_playbook.yaml -i inventory.yaml*:
+
+![Вроде всё прошло...](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab3/Screenshot%20from%202025-06-25%2003-30-01.png)
+
+Вроде всё прошло. Проверим результат:
+
+![Так, стоп...](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab3/Screenshot%20from%202025-06-25%2003-40-35.png)
+
+Так, стоп... Давайте разбираться. Добавим задачу вывода серийного номера на экран:
+
+![Пустые строки](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab3/Screenshot%20from%202025-06-25%2003-37-40.png)
+
+Откуда-то взялись пустые строки. Ну ладно, отсчитаем номер строки с текстом и возьмём именно её:
+
+![Правильные номера](https://raw.githubusercontent.com/warmike01/2025-network_programming-k3323-klopov-m-p/refs/heads/master/lab3/Screenshot%20from%202025-06-25%2003-45-02.png)
+
+Так-то лучше!
