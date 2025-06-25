@@ -1,0 +1,32 @@
+- name: Configure CHR using netbox data
+  hosts: all
+  gather_facts: no
+  vars:
+    api_endpoint: http://0.0.0.0:8000
+    token: 4a8d76d62a80e367f32ba3817628bed25198ba0b
+  tasks:
+
+    - name: Get netbox data
+      set_fact:
+        devices: "{{ query('netbox.netbox.nb_lookup', 'devices', api_endpoint=api_endpoint, token=token, validate_certs=false) }}"
+
+    - name: Extract router names and ips
+      set_fact:
+        router1_name: "{{ devices[0].value.name }}"
+        router1_ip: "{{ devices[0].value.primary_ip4.address }}"
+        router2_name: "{{ devices[1].value.name }}"
+        router2_ip: "{{ devices[1].value.primary_ip4.address }}"
+
+    - name: Configure CHR 1 
+      community.routeros.command:
+        commands:
+          - /system identity set name={{ router1_name }}
+          - /ip address add address={{ router1_ip }} interface=ether1
+      when: inventory_hostname == 'router1'
+
+    - name: Configure CHR 2 
+      community.routeros.command:
+        commands:
+          - /system identity set name={{ router2_name }}
+          - /ip address add address={{ router2_ip }} interface=ether1
+      when: inventory_hostname == 'router2'
